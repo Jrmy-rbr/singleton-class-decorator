@@ -1,0 +1,1 @@
+# robust-singleton-decorator
