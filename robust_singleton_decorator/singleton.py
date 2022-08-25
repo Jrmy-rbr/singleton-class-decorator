@@ -3,7 +3,6 @@ from typing import Any, Dict, Optional
 import inspect
 
 import logging
-import pytest
 
 
 def singleton(*arg, **kwarg):
@@ -121,5 +120,3 @@ def check_singleton_input(arg, kwarg, allowed_kwarg: Optional[Dict[str, Any]] = 
                 f"Keyword argument {arg_name} is expected to be an instance of {allowed_kwarg[arg_name]}. "
                 f"Got {type(arg_val)} instead"
             )
-
-

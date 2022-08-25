@@ -1,4 +1,5 @@
 import pytest
+from robust_singleton_decorator.singleton import singleton
 
 # >>> Test 1
 def test_singleton_var_in_constructor():
