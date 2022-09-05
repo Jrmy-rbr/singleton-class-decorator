@@ -4,6 +4,8 @@ import inspect
 
 import logging
 
+from robust_singleton_decorator.MetaClasses import Final
+
 
 def singleton(*arg, **kwarg):
     """Transform an input class into a singleton class. Can be used as a decorator
@@ -29,15 +31,6 @@ def singleton(*arg, **kwarg):
         logging.warning(
             "`is_final` is set to False. This can lead to unexpected behavior for the child class of this class"
         )
-
-    class Final(type):
-        """Meta-class that can be used in order to prevent the output class to be used as a base class"""
-
-        def __new__(cls, name, bases, classdict):
-            for b in bases:
-                if isinstance(b, Final):
-                    raise TypeError("type '{0}' is not an acceptable base type".format(b.__name__))
-            return type.__new__(cls, name, bases, dict(classdict))
 
     def wrapper(class_):
         """Take a class as input. Creates and returns a subclass
