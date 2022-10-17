@@ -21,11 +21,17 @@ class SingletonChildren(type):
     """
 
     def __new__(cls, name, bases, classdict):
-        attributes = ["__already_created", "__cached_obj", "__cached_args", "__cached_kwargs"]
+        attributes = ["__already_created", "__cached_obj", "__cached_args", "__cached_kwargs", "__is_singleton"]
         for b in bases:
-            if all([hasattr(b, attr) for attr in attributes]):
+            if all([hasattr(b, attr) for attr in attributes]) and isinstance(b, SingletonChildren):
                 classdict.update(
-                    {"__already_created": False, "__cached_obj": None, "__cached_args": None, "__cached_kwargs": None}
+                    {
+                        "__already_created": False,
+                        "__cached_obj": None,
+                        "__cached_args": None,
+                        "__cached_kwargs": None,
+                        "__is_singleton": True,
+                    }
                 )
 
         return type.__new__(cls, name, bases, classdict)
@@ -37,11 +43,16 @@ class NonSingletonChildren(type):
     """
 
     def __new__(cls, name, bases, classdict):
+        attributes = ["__already_created", "__cached_obj", "__cached_args", "__cached_kwargs", "__is_singleton"]
         for b in bases:
-            if hasattr(b, "__cached_obj") and isinstance(b, NonSingletonChildren):
-                cached_obj = getattr(b, "__cached_obj")
-                new = cached_obj.__new__
-                init = cached_obj.__init__
-                classdict.update({"__new__": new, "__init__": init})
-
+            if all([hasattr(b, attr) for attr in attributes]) and isinstance(b, NonSingletonChildren):
+                classdict.update(
+                    {
+                        "__already_created": False,
+                        "__cached_obj": None,
+                        "__cached_args": None,
+                        "__cached_kwargs": None,
+                        "__is_singleton": False,
+                    }
+                )
         return type.__new__(cls, name, bases, classdict)

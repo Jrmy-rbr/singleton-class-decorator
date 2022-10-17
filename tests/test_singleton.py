@@ -1,23 +1,20 @@
 import pytest
+
 from robust_singleton_decorator.singleton import singleton
 
 
 def test_singleton_var_in_constructor():
     @singleton
     class TestClass:
-        def __init__(self, val1, val2):
-            self.val1 = val1
-            self.val2 = val2
+        def __init__(self, x, y):
+            self.x = x
+            self.y = y
 
     obj_1 = TestClass(3, 4)
-    assert obj_1.val1 == 3
-    assert obj_1.val2 == 4
+    assert obj_1.x == 3
+    assert obj_1.y == 4
 
-    with pytest.raises(ValueError) as e:
-        obj_2 = TestClass(2, 3)
-    assert "This object has already been created, you cannot redefine it with different arguments" in str(e)
-
-    obj_3 = TestClass(3, 4)
+    obj_3 = TestClass(1, 4)  # check that new arguments are ignored
     assert obj_1 is obj_3
 
 
@@ -39,13 +36,13 @@ def test_inheritance():
         def __init__(self):
             self.val = 3
 
-    with pytest.raises(TypeError) as e:
+    # Check that inheritance fails
+    with pytest.raises(TypeError):
 
         class TestChildClass(TestBaseClass):
             ...
 
-    assert "is not an acceptable base type" in str(e)
-
+    # check that inheritance works
     @singleton(is_final=False)
     class TestBaseClass2:
         def __init__(self):

@@ -1,6 +1,10 @@
 import pytest
 
-from robust_singleton_decorator.MetaClasses import Final, SingletonChildren, NonSingletonChildren
+from robust_singleton_decorator.MetaClasses import (
+    Final,
+    SingletonChildren,
+    NonSingletonChildren,
+)
 from robust_singleton_decorator.singleton import singleton
 
 
@@ -38,14 +42,10 @@ def test_singleton_children():
     class B(A):
         ...
 
-    # check that B is also a singleton
+    # check that B is also a singleton,
     b = B(2, 3)
 
-    with pytest.raises(ValueError) as e:
-        b2 = B(3, 4)
-    assert "This object has already been created, you cannot redefine it with different arguments" in str(e)
-
-    b3 = B(2, 3)
+    b3 = B(1, 3)  # check that the new argument are ignored
     assert b is b3
 
 
