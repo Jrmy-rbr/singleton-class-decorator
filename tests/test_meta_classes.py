@@ -1,11 +1,7 @@
 import pytest
 
-from robust_singleton_decorator.MetaClasses import (
-    Final,
-    SingletonChildren,
-    NonSingletonChildren,
-)
-from robust_singleton_decorator.singleton import singleton
+from robust_singleton_decorator.MetaClasses import Final, _NonSingletonChildren, _SingletonChildren
+from robust_singleton_decorator.cache import Cache
 
 
 def test_final():
@@ -28,51 +24,50 @@ def test_final():
 
 
 def test_singleton_children():
-    @singleton(is_final=False)
-    class A(metaclass=SingletonChildren):
+    class A:
         def __init__(self, x, y):
             self.x = x
             self.y = y
 
-    assert isinstance(A, SingletonChildren)
+    # overwrite A using the  _SingletonChildren metaclass
+    A = _SingletonChildren(A.__name__, A.__mro__, {"__cache": Cache(is_singleton=False)})
+    assert isinstance(A, _SingletonChildren)
 
     a = A(1, 2)
     assert a.x == 1 and a.y == 2
 
+    assert a.__cache == Cache(is_singleton=False)
+
+    # check that when inheriting from A, the class B changes its cache attribute
     class B(A):
         ...
 
-    # check that B is also a singleton,
     b = B(2, 3)
 
-    b3 = B(1, 3)  # check that the new argument are ignored
-    assert b is b3
+    assert b.__cache == Cache(is_singleton=True)
 
 
 def test_non_singleton_children():
-    @singleton(is_final=False)
-    class A(metaclass=NonSingletonChildren):
+    class A:
         def __init__(self, x, y):
             self.x = x
             self.y = y
 
-    assert isinstance(A, NonSingletonChildren)
+    # overwrite A using the  _NonSingletonChildren metaclass
+    A = _NonSingletonChildren(A.__name__, A.__mro__, {"__cache": Cache(is_singleton=True)})
+    assert isinstance(A, _NonSingletonChildren)
 
     a = A(1, 2)
     assert a.x == 1 and a.y == 2
+    assert a.__cache == Cache(is_singleton=True)
 
-    a2 = A(1, 2)
-    assert a2 is a
-
+    # check that when inheriting from A, the class B changes its cache attribute
     class B(A):
         ...
 
-    b1 = B(1, 2)
-    assert b1.x == 1 and b1.y == 2
-
-    b2 = B(1, 3)
-
-    assert b2 is not b1
+    b = B(1, 2)
+    assert b.x == 1 and b.y == 2
+    assert b.__cache == Cache(is_singleton=False)
 
 
 if __name__ == "__main__":
