@@ -60,6 +60,8 @@ def new(class_, *args, **kwargs):
 
 
 class SingletonFinal(type):
+    """Metaclass creating singleton classes that are final, that is, the created classes cannot be a parent classes."""
+
     def __new__(cls, name, bases, classdict):
         for b in bases:
             if isinstance(b, SingletonFinal):
@@ -73,6 +75,8 @@ class SingletonFinal(type):
 
 
 class SingletonWithSingletonChildren(type):
+    """Metaclass creating singleton classes whose children are **also** singleton classes."""
+
     def __new__(cls, name, bases, classdict):
         old_class = type.__new__(cls, name, bases, classdict)
 
@@ -86,6 +90,8 @@ class SingletonWithSingletonChildren(type):
 
 
 class SingletonWithNonSingletonChildren(type):
+    """Metaclass creating singleton classes whose children are **not** singleton classes."""
+
     def __new__(cls, name, bases, classdict):
         old_class = type.__new__(cls, name, bases, classdict)
 
