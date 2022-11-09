@@ -60,7 +60,7 @@ def new(class_, *args, **kwargs):
 
 
 class SingletonFinal(type):
-    """Metaclass creating singleton classes that are final, that is, the created classes cannot be a parent classes."""
+    """Metaclass creating singleton classes that are final, that is, the created classes cannot be parent classes."""
 
     def __new__(cls, name, bases, classdict):
         for b in bases:
