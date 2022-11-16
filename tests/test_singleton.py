@@ -19,10 +19,7 @@ def test_singleton_var_in_constructor():
     assert obj_1 is obj_3
 
 
-@pytest.mark.parametrize(
-    "is_final",
-    [(False,), (True,)],
-)
+@pytest.mark.parametrize("is_final", [(False,), (True,)])
 def test_method_usage(
     is_final,
 ):
