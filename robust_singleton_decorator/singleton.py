@@ -35,6 +35,8 @@ def singleton(class_=None, /, *, is_final=True, must_children_be_singleton=MUST_
         Return
             NewClass: a subclass of the input that acts as a singleton.
         """
+        # * Check that class_ is not already created fom on the of the Singleton metaclass
+        _check_metaclass(class_)
 
         # * Dynamically create the new class using on of the meta classes
         MetaClass = _get_metaclass(is_final, must_children_be_singleton)
@@ -52,3 +54,14 @@ def _get_metaclass(is_final, must_children_be_singleton):
         MetaClass = SingletonWithNonSingletonChildren
 
     return MetaClass
+
+
+def _check_metaclass(class_) -> None:
+    for metaclass in [SingletonFinal, SingletonWithSingletonChildren, SingletonWithNonSingletonChildren]:
+        if isinstance(class_, metaclass):
+            raise TypeError(
+                f"The class {class_.__name__} is an instance of {metaclass.__name__}. "
+                f"You cannot use the singleton decorator on classes that derive from instances of {metaclass}. "
+                "Please use the singleton decorator on the base class, and use the arguments `is_final` "
+                "and ` must_children_be_singleton` to define the behavior of its children classes."
+            )
