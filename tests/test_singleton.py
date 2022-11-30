@@ -229,3 +229,26 @@ def test_singleton_non_children_singleton_case_overwrite_new_2():
 
     b2 = TestChildClass(3, 5)
     assert b is not b2
+
+
+@pytest.mark.parametrize(
+    "must_children_be_singleton_parent, must_children_be_singleton_parent_child",
+    [(True, True), (True, False), (False, True), (False, False)],
+)
+def test_singleton_call_on_child_class(must_children_be_singleton_parent, must_children_be_singleton_parent_child):
+    @singleton(is_final=False, must_children_be_singleton=must_children_be_singleton_parent)
+    class TestBaseClass:
+        def __new__(cls, val0, val):
+            obj = super().__new__(cls)
+            obj.val0, obj.val = val0, val
+
+            return obj
+
+    with pytest.raises(TypeError) as e:
+
+        @singleton(is_final=False, must_children_be_singleton=must_children_be_singleton_parent_child)
+        class TestChildClass(TestBaseClass):
+            def __init__(self, val0, val):
+                ...
+
+    assert "You cannot use the singleton" in str(e)
