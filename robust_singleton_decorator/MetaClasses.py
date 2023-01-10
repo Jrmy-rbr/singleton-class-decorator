@@ -2,8 +2,7 @@ from robust_singleton_decorator.utils import make_ignore_extra_args_wrapper
 from robust_singleton_decorator.logging import log
 
 """
-Three meta-classes that allow to define the possible of child classes' behaviors for the classes defined throught the
-sngleton decorator.
+Two meta-classes that allow to define the classes output by the singleton decorator.
 
 """
 
