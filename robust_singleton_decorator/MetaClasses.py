@@ -46,6 +46,8 @@ class MakeSingleton(type):
 
 
 class MakeFinalSingleton(MakeSingleton):
+    """Metaclass creating singleton classes that cannot have children"""
+
     def __new__(cls, name, bases, classdict, make_singleton: bool = True):
         for b in bases:
             if isinstance(b, MakeFinalSingleton):
