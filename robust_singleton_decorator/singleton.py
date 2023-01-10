@@ -8,13 +8,6 @@ def singleton(class_: Optional[Type] = None, /, *, is_final: bool = True):
     Args:
         class_ (Optional[Type]): A class as a positional argument, whose behavior will be modified
         is_final (bool): Keyword argument. If True the class cannot be used as a base class for inheritance.
-<<<<<<< HEAD
-=======
-            WARNING: Setting it to False can lead to unexpected behaviour for the Child class. Default to True.
-        must_children_be_singleton (bool, optional): Keyword argument. Whether the children class of the current
-            singleton class must also be singleton.
-
->>>>>>> 8441a2f (rewrote singleton using metaclasses)
 
     Returns:
         NewClass: a subclass of the input that acts as a singleton.
