@@ -167,3 +167,25 @@ def decorator_with_redefined_new_and_inheritence_2():
     assert (obj.val0, obj.val) == (2, 3)
 
     assert obj is not TestChildClass(3, 5)
+
+
+@pytest.mark.parametrize("is_final", [True, False])
+def test_singleton_on_classes_internally_using_a_metaclass(is_final):
+    class AMetaClass(type):
+        ...
+
+    class BaseClass(metaclass=AMetaClass):
+        ...
+
+    @singleton
+    class MyClass(BaseClass):
+        ...
+
+    # check that BaseClass and therefore MyClass internally already use a meta-class
+    assert type(BaseClass) != type
+
+    # Check that MyClass is still an instance of AMetaClass
+    assert isinstance(MyClass, AMetaClass)
+
+    # check that MyPydanticClass is a singleton
+    assert MyClass() is MyClass()
