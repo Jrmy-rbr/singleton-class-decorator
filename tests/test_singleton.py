@@ -58,10 +58,7 @@ def test_signleton():
         def __init__(self):
             self.val = 3
 
-    obj_1 = TestClass()
-    obj_2 = TestClass()
-
-    assert obj_1 is obj_2
+    assert TestClass() is TestClass()
 
 
 def test_default_inheritance():
@@ -77,7 +74,7 @@ def test_default_inheritance():
             ...
 
 
-def test_singleton_children_inheritance():
+def test_singleton_inheritance():
     # check that inheritance works
     @singleton(is_final=False)
     class TestBaseClass:
@@ -85,104 +82,53 @@ def test_singleton_children_inheritance():
             self.val = 3
 
     # By default, a children of a Singleton is not a singleton
-    # one needs to use the singleton decorator to make it a singleton
+    # one would need to use the singleton decorator to make it a singleton
     class TestChildClass(TestBaseClass):
         ...
 
-    a = TestChildClass()
-    a2 = TestChildClass()
-
-    assert a is not a2
+    assert TestChildClass() is not TestChildClass()
 
     # check one can use the singleton decorator on a child class
     @singleton
     class TestOtherChildClass(TestBaseClass):
         ...
 
-    b = TestOtherChildClass()
-    b2 = TestOtherChildClass()
-
-    assert b is b2
+    assert TestOtherChildClass() is TestOtherChildClass()
 
 
-def test_non_singleton_children_inheritance():
-    # check that inheritance works
-    @singleton(is_final=False)
+def test_decorator_with_redefined_new():
+    @singleton
     class TestBaseClass:
-        def __init__(self):
-            self.val = 3
-
-    # check that TestBaseClass is a singleton
-    a = TestBaseClass()
-    a2 = TestBaseClass()
-
-    assert a is a2
-
-    # test that TestChildrenClass is not a singleton
-    class TestChildClass(TestBaseClass):
-        ...
-
-    b = TestChildClass()
-    b2 = TestChildClass()
-
-    assert b is not b2
-
-
-@pytest.mark.parametrize("is_final", [(False,), (True,)])
-def test_decorator_with_redefined_new(is_final):
-    @singleton(is_final=is_final)
-    class TestBaseClass:
-        def __new__(cls, val0, val):
-            obj = super().__new__(cls)
-            obj.val0 = val0
-
-            return obj
-
-        def __init__(self, val0, val):
-            self.val = val
-
-    a = TestBaseClass(1, 13)
-    assert (a.val0, a.val) == (1, 13)
-
-    a2 = TestBaseClass(1, 2)
-    assert a is a2
-
-    if not is_final:
-
-        class TestChildClass(TestBaseClass):
-            def __new__(cls, val0, val):
-                obj = super().__new__(cls, val0, val)
-
-                obj.val0, obj.val = 2, 3
-                return obj
-
-            def __init__(self, val0, val):
-                ...
-
-        b = TestChildClass(3, 5)
-        assert (b.val0, b.val) == (2, 3)
-
-        b2 = TestChildClass(3, 5)
-        assert b is not b2
-
-
-def test_singleton_non_children_singleton_case_overwrite_new():
-    @singleton(is_final=False)
-    class TestBaseClass:
-        def __new__(cls, val0, val):
-            obj = super().__new__(cls)
-            obj.val0 = val0
-
-            return obj
-
-        def __init__(self, val0, val):
-            self.val = val
-
-    # If one wants to overwrite the __new__ method of a method inheriting from a singletion class, one should
-    # use the __new__ method from object internally, not super().__new__
-    class TestChildClass(TestBaseClass):
         def __new__(cls, val0, val):
             obj = object.__new__(cls)
+            obj.val0 = val0
+
+            return obj
+
+        def __init__(self, val0, val):
+            self.val = val
+
+    obj_1 = TestBaseClass(1, 13)
+    assert (obj_1.val0, obj_1.val) == (1, 13)
+
+    assert obj_1 is TestBaseClass(1, 2)  # the arguments here should be ignored
+
+
+def test_decorator_with_redefined_new_and_inheritence():
+    @singleton(is_final=False)
+    class TestBaseClass:
+        def __new__(cls, val0, val):
+            obj = object.__new__(cls)
+            obj.val0 = val0
+
+            return obj
+
+        def __init__(self, val0, val):
+            self.val = val
+
+    class TestChildClass(TestBaseClass):
+        def __new__(cls, val0, val):
+            obj = super().__new__(cls, val0, val)
 
             obj.val0, obj.val = 2, 3
             return obj
@@ -190,14 +136,12 @@ def test_singleton_non_children_singleton_case_overwrite_new():
         def __init__(self, val0, val):
             ...
 
-    b = TestChildClass(3, 5)
-    assert (b.val0, b.val) == (2, 3)
-
-    b2 = TestChildClass(3, 5)
-    assert b is not b2
+    obj = TestChildClass(3, 5)
+    assert (obj.val0, obj.val) == (2, 3)
+    assert obj is not TestChildClass(3, 5)
 
 
-def test_singleton_non_children_singleton_case_overwrite_new_2():
+def decorator_with_redefined_new_and_inheritence_2():
     @singleton(is_final=False)
     class TestBaseClass:
         def __new__(cls, val0, val):
@@ -209,14 +153,9 @@ def test_singleton_non_children_singleton_case_overwrite_new_2():
         def __init__(self, val0, val):
             self.val = val
 
-    # If one wants to overwrite the __new__ method of a method inheriting from a singletion class, one should
-    # not use not super().__new__. Instead they should use one of the following ways:
-    # - Internally use the __new__ method from `object`,
-    # - Internally use the `_old_new` method from cls
-    # - Internally use super()._old_new
     class TestChildClass(TestBaseClass):
         def __new__(cls, val0, val):
-            obj = super()._old_new(cls, val0, val)
+            obj = super().__new__(cls, val0, val)
 
             obj.val0, obj.val = 2, 3
             return obj
@@ -224,8 +163,7 @@ def test_singleton_non_children_singleton_case_overwrite_new_2():
         def __init__(self, val0, val):
             ...
 
-    b = TestChildClass(3, 5)
-    assert (b.val0, b.val) == (2, 3)
+    obj = TestChildClass(3, 5)
+    assert (obj.val0, obj.val) == (2, 3)
 
-    b2 = TestChildClass(3, 5)
-    assert b is not b2
+    assert obj is not TestChildClass(3, 5)
