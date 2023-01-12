@@ -1,5 +1,5 @@
 import pytest
-from robust_singleton_decorator.MetaClasses import MakeSingleton, MakeFinalSingleton
+from robust_singleton_decorator.MetaClasses import MakeFinalSingleton, MakeSingleton, _get_metaclasses
 
 
 def test_make_singleton_class():
@@ -84,3 +84,7 @@ def test_redefining_new():
 
     # check B() is not a singleton
     assert B() is not B()
+
+
+def test_get_metaclass():
+    _get_metaclasses(type)
