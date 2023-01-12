@@ -1,4 +1,4 @@
-from robust_singleton_decorator.utils import make_ignore_extra_args_wrapper
+from singleton_class_decorator.utils import make_ignore_extra_args_wrapper
 from typing import Type
 from hashlib import sha256
 

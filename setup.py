@@ -8,10 +8,10 @@ with open("VERSION") as f:
     version = f.read()
 
 setup(
-    name="rosbust-singleton-decorator",
+    name="singleton-class-decorator",
     version=version,
-    description="Robeut Singleton Decorator",
-    url="https://github.com/Jrmy-rbr/robust-singleton-decorator",
+    description="Singleton Class Decorator",
+    url="https://github.com/Jrmy-rbr/singleton-class-decorator",
     author="Jeremy Ribeiro",
     author_email="jeremy.d.ribeiro@gmail.com",
     install_requires=required,
