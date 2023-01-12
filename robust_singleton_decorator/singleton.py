@@ -7,8 +7,6 @@ def singleton(class_=None, /, *, is_final=True):
     Args:
         class_ (Class): A class as a positional argument, whose behavior will be modified
         is_final (bool): Keyword argument. If True the class cannot be used as a base class for inheritance.
-            WARNING: Setting it to False can lead to unexpected behaviour for the Child class. Default to True.
-
 
     Returns:
         NewClass: a subclass of the input that acts as a singleton.
