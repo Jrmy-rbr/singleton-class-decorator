@@ -33,28 +33,28 @@ def new(class_: Type, *args, **kwargs):
 # * Define the __new__ functions that'll be used in the Metaclasses defined below
 
 
-def make_singleton__new__(cls, name, bases, classdict, make_singleton: bool = False):
-    old_class = type(cls).__new__(cls, name, bases, classdict)
+def make_singleton__new__(meta_cls, name, bases, classdict, make_singleton: bool = False):
+    old_class = type(meta_cls).__new__(meta_cls, name, bases, classdict)
 
     # Make the singleton class if make_singleton
     if make_singleton:
         classdict["_old_new"] = old_class.__new__ if "__new__" not in classdict else classdict["__new__"]
         classdict["__new__"] = new
-        return type(cls).__new__(cls, name, bases, classdict)
+        return type(meta_cls).__new__(meta_cls, name, bases, classdict)
 
     # if not make_singleton, simply forward the __new__/_old_new class of the old_class to the new one.
     old_new = classdict["__new__"] if "__new__" in classdict else getattr(old_class, "_old_new", old_class.__new__)
     classdict["__new__"] = make_ignore_extra_args_wrapper(old_new)
 
-    return type(cls).__new__(cls, name, bases, classdict)
+    return type(meta_cls).__new__(meta_cls, name, bases, classdict)
 
 
-def make_final_singleton__new__(cls, name, bases, classdict, make_singleton: bool = True):
+def make_final_singleton__new__(meta_cls, name, bases, classdict, make_singleton: bool = True):
     for b in bases:
-        if isinstance(b, cls):
+        if isinstance(b, meta_cls):
             raise TypeError("type '{0}' is not an acceptable base type".format(b.__name__))
 
-    return super(cls, cls).__new__(cls, name, bases, classdict, make_singleton)
+    return super(meta_cls, meta_cls).__new__(meta_cls, name, bases, classdict, make_singleton)
 
 
 # * Defined the _get_metaclasses function
@@ -66,7 +66,8 @@ def _get_metaclasses(klass: Type):
     conflict by using the singleton decorator on classes defined through a meta-class
 
     Returns:
-        _type_: _description_
+        Tuple[MakeSingleton, MakeFinalSingleton]: Two meta-classes used in the `singleton` function
+            in order to create singleton classes.
     """
     MakeSingleton = type("MakeSingleton", (type(klass),), {"__new__": make_singleton__new__})
     MakeFinalSingleton = type("MakeFinalSingleton", (MakeSingleton,), {"__new__": make_final_singleton__new__})
