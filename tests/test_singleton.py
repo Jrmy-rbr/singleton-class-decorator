@@ -1,7 +1,7 @@
 import math
 import pytest
 
-from robust_singleton_decorator.singleton import singleton
+from singleton_class_decorator.singleton import singleton
 
 
 def test_singleton_var_in_constructor():

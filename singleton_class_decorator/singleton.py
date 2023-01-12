@@ -1,5 +1,5 @@
 from typing import Type, Optional
-from robust_singleton_decorator.MetaClasses import _get_metaclasses
+from singleton_class_decorator.MetaClasses import _get_metaclasses
 
 
 def singleton(class_: Optional[Type] = None, /, *, is_final: bool = True):

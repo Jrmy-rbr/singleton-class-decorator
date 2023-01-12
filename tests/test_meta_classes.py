@@ -1,6 +1,6 @@
 import pytest
 
-from robust_singleton_decorator.MetaClasses import MakeFinalSingleton, MakeSingleton
+from singleton_class_decorator.MetaClasses import MakeFinalSingleton, MakeSingleton
 
 
 def test_make_singleton_class():
