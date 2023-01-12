@@ -57,7 +57,7 @@ def make_final_singleton__new__(cls, name, bases, classdict, make_singleton: boo
     return super(cls, cls).__new__(cls, name, bases, classdict, make_singleton)
 
 
-# * Defien the _get_metaclasses function
+# * Defined the _get_metaclasses function
 
 
 def _get_metaclasses(klass: Type):
