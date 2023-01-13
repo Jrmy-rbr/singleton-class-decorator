@@ -1,0 +1,8 @@
+name: run-pytest
+on: [pull_request]
+jobs:
+  run-pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - run: pip install pytest pytest-cov
+      - run: pytest --cov=singleton_class_decorator tests/
