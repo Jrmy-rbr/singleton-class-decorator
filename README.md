@@ -1,5 +1,3 @@
-![coverage badge](https://img.shields.io/badge/coverage-100%-brightgreen.svg)
-<img title="a title" alt="coverage badge" src="https://img.shields.io/badge/coverage-100%-brightgreen.svg">
               
 # Singleton Class Decorator
 
