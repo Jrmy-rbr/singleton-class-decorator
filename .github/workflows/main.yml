@@ -5,4 +5,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: pip install pytest pytest-cov
-      - run: pytest --cov=singleton_class_decorator ../tests/
+      - run: pytest --cov=singleton_class_decorator ../../tests/
