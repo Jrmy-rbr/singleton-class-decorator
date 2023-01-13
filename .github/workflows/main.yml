@@ -8,4 +8,4 @@ jobs:
       - run: pip install pytest pytest-cov
       - run: pwd
       - run: ls
-      - run: pytest --cov=singleton_class_decorator ../../tests/
+      - run: pytest --cov=singleton_class_decorator tests/
