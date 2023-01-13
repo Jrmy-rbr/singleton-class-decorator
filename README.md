@@ -61,6 +61,7 @@ isinstance(obj, MyClass)
 ```
 
 # Usage
+Here are some usage examples:
 
 ## Simplest use case
 
