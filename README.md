@@ -1,3 +1,4 @@
+.. |coverage| image:: https://img.shields.io/badge/coverage-100%-brightgreen.svg
 # Singleton Class Decorator
 
 This repo implements a decorator that creates singleton classes. As opposed to some other singleton decorators,
