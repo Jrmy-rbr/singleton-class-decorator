@@ -1,1 +1,9 @@
-
+name: make-coverage_badge
+on: [push]
+jobs:
+  make-coverage-badge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: pip install pytest pytest-cov
+      - run: python make_coverage_badge.py
