@@ -63,8 +63,75 @@ isinstance(obj, MyClass)
 ```
 
 # Usage
-Here are some usage examples:
+
 
 ## Simplest use case
+Here are some usage examples. To make a singleton class you simply need to use the singleton decorator
+on your class as follows:
+
+```python
+@singleton
+class MyClass:
+    ...
+
+# MyClass is now a singleton, which we can check
+assert MyClass() is MyClass()
+
+```
+
+As mentioned earlier, you can check the type of an object as with a regular class:
+
+```python
+obj = MyClass()
+
+type(obj)
+# returns `<class 'singleton_class_decorator.MetaClasses.MyClass'>`
+
+type(obj) == MyClass
+# This evaluates to True
+
+isinstance(obj, MyClass)
+# This evaluates to True
+
+```
 
 ## Enabling Inheritance
+
+The above should work for any class. However if you try to create a child class from `MyClass` an error will be raised. This is because by default singleton 
+disable inheritance. 
+```python
+@singleton
+class MyClass:
+    ...
+
+# is equivalent to the following
+
+@singleton(is_final=True)
+class MyClass:
+    ...
+```
+As you see, the default value of the key word argument `is_final` is `True`, which disables inheritance. But you can easily changed.
+
+```python
+# enable inheritance by setting the ketword argument `is_final` for `False`
+@singleton(is_final=False)
+class MyClass:
+    ...
+
+# This will now work
+class ChildClass(MyClass):
+    ...
+
+# However the ClidClass is not automatically a singleton
+assert ChildClass() is not ChildClass()
+
+# If you want a child class to be a singleton, you need to use the singleton decorator
+# Again you may set the `is_final` to `True` or `False` as you whish.
+@singleton
+class OtherChildClass(MyClass):
+    ...
+
+# OtherChildClass is a singleton
+assert OtherChildClass() is OtherChildClass()
+
+```
