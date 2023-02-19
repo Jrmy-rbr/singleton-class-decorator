@@ -11,7 +11,8 @@ or inheritance for example.
 
 The main purpose of this repo was for me to learn more about python, and some of its more advanced features. But this decorator comes with its advantages. It is not more powerful than for example [this](https://github.com/Kemaweyan/singleton_decorator) commonly used decorator by [Kemaweyan](https://github.com/Kemaweyan). However, it allows using singleton classes as actual classes, and therefore it might be more intuitive to use in situations where Kemayan's singleton object needs to use some extra attribute. Here is a quick illustration of situations in which our decorator behaves differently.
 
-### Kemayan decorator
+## Quick comparison with Kemayan's decorator
+### Kemayan's decorator
 ```python
 @singleton
 class MyClass:
