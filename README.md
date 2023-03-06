@@ -1,7 +1,8 @@
 ![coverage_badge](https://img.shields.io/badge/coverage-100%25-brightgreen)
 
 # Installation
-<!-- to be completed -->
+To be completed...
+
 # Singleton Class Decorator
 
 This repo implements a decorator that creates singleton classes. As opposed to some other singleton decorators,
