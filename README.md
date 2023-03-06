@@ -140,4 +140,4 @@ assert OtherChildClass() is OtherChildClass()
 
 # How Does it work?
 
-Go check [...] 
+Go check my blog post about this decorator [here](https://jrmy-rbr.github.io/2023/02/19/singleton_decorator.html) 
