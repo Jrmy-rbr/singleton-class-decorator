@@ -1,10 +1,13 @@
 from setuptools import setup, find_packages
+import os
 
+if os.path.isfile("requirements.txt"):
+    with open("requirements.txt") as f:
+        required = [line for line in f.read().splitlines() if not line.startswith("-")]
+else:
+    required = []
 
-with open("requirements.txt") as f:
-    required = [line for line in f.read().splitlines() if not line.startswith("-")]
-
-with open("VERSION") as f:
+with open("VERSION.md") as f:
     version = f.read()
 
 setup(
