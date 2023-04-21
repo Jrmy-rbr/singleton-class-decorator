@@ -1,16 +1,20 @@
 ![coverage_badge](https://img.shields.io/badge/coverage-100%25-brightgreen)
 
 # Installation
-To be completed...
+## Through GitHub
+1. Go to a folder where you want to store the repo: `cd <path_to_folder>`
+2. Clone the repo using the following: `git clone git@github.com:Jrmy-rbr/singleton-class-decorator.git`
+3. Install using pip: `pip install ./singleton-class-decorator`
 
+## Through PiPy
+Not yet available...
 # Singleton Class Decorator
 
 This repo implements a decorator that creates singleton classes. As opposed to some other singleton decorators,
 the singleton classes created through this decorator are true classes. As a consequence,
-every operation supported by classes is supported by the singleton classes, like the use of `isinstance`,
-or inheritance for example.
+every operation supported by classes is supported by the singleton classes, like the use of instance, or inheritance for example.
 
-The main purpose of this repo was for me to learn more about python, and some of its more advanced features. But this decorator comes with its advantages. It is not more powerful than for example [this](https://github.com/Kemaweyan/singleton_decorator) commonly used decorator by [Kemaweyan](https://github.com/Kemaweyan). However, it allows using singleton classes as actual classes, and therefore it might be more intuitive to use in situations where Kemayan's singleton object needs to use some extra attribute. Here is a quick illustration of situations in which our decorator behaves differently.
+The main purpose of this repo was for me to learn more about Python, and some of its more advanced features. But this decorator comes with its advantages. It is not more powerful than for example [this](https://github.com/Kemaweyan/singleton_decorator) commonly used decorator by [Kemaweyan](https://github.com/Kemaweyan). However, it allows using singleton classes as actual classes, and therefore it might be more intuitive to use in situations where Kemayan's singleton object needs to use some extra attribute. Here is a quick illustration of situations in which our decorator behaves differently.
 
 ## Quick comparison with Kemayan's decorator
 ### Kemayan's decorator
