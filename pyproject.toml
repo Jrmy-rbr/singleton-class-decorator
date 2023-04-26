@@ -1,0 +1,18 @@
+
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name="singleton-class-decorator"
+description="Singleton Class Decorator"
+authors = [{ name = "Jeremy Ribeiro", email = "jeremy.d.ribeiro@gmail.com" }]
+readme = "README.md"
+requires-python = ">=3.9"
+dynamic=["version"]
+
+[project.urls]
+Homepage="https://github.com/Jrmy-rbr/singleton-class-decorator"
+
+[tool.setuptools.dynamic]
+version = {file = "VERSION.md"}
