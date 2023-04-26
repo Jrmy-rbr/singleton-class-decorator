@@ -9,6 +9,7 @@ description="Singleton Class Decorator"
 authors = [{ name = "Jeremy Ribeiro", email = "jeremy.d.ribeiro@gmail.com" }]
 readme = "README.md"
 requires-python = ">=3.9"
+license = { file = "LICENSE" }
 dynamic=["version"]
 
 [project.urls]
