@@ -6,7 +6,7 @@
 2. Clone the repo using the following: `git clone git@github.com:Jrmy-rbr/singleton-class-decorator.git`
 3. Install using pip: `pip install ./singleton-class-decorator`
 
-## Through PiPy
+## Through PyPi
 Not yet available...
 # Singleton Class Decorator
 
