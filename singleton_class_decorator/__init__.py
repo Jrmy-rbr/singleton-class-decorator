@@ -1,0 +1,1 @@
+from singleton_class_decorator.singleton import singleton

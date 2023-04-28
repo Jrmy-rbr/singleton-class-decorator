@@ -73,6 +73,12 @@ isinstance(obj, MyClass)
 # Usage
 
 
+You can import the singleton class decorator as follows:
+
+```python
+from singleton_class_decorator import singleton
+```
+
 ## Simplest use case
 Here are some usage examples. To make a singleton class you simply need to use the singleton decorator
 on your class as follows:
@@ -107,6 +113,8 @@ isinstance(obj, MyClass)
 
 The above should work for any class. However, if you try to create a child class from `MyClass` an error will be raised. This is because by default the singleton disables inheritance. 
 ```python
+from singleton_class_decorator import singleton
+
 @singleton
 class MyClass:
     ...
