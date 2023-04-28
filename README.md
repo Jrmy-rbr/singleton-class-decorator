@@ -6,8 +6,8 @@
 2. Clone the repo using the following: `git clone git@github.com:Jrmy-rbr/singleton-class-decorator.git`
 3. Install using pip: `pip install ./singleton-class-decorator`
 
-## Through PyPi
-Not yet available...
+## Through PyPI
+Run `python -m pip install singleton-class-decorator`
 # Singleton Class Decorator
 
 This repo implements a decorator that creates singleton classes. As opposed to some other singleton decorators,
